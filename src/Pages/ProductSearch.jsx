@@ -38,6 +38,14 @@ class ProductSearch extends Component {
     });
   };
 
+  categoryId = async (event) => {
+    const { target: { id } } = event;
+    const response = await getProductsFromCategoryAndQuery(id);
+    this.setState({
+      products: response.results,
+    });
+  };
+
   render() {
     const {
       categories,
@@ -91,9 +99,12 @@ class ProductSearch extends Component {
         <aside>
           {categories.map((category) => (
             <button
+              name={ category.id }
+              id={ category.id }
               data-testid="category"
               type="button"
               key={ category.id }
+              onClick={ this.categoryId }
             >
               {category.name}
             </button>
