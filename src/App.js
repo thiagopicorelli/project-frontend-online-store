@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './App.css';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import ProductSearch from './Pages/ProductSearch';
 
-class App extends Component() {
-  render() {
-    return (
-      <h1>
-        Requisito 1
-      </h1>
-    );
-  }
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={ ProductSearch } />
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
