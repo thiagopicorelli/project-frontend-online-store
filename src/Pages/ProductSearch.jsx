@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories } from '../services/api';
 
-
 class ProductSearch extends Component {
   constructor() {
     super();
@@ -27,16 +26,18 @@ class ProductSearch extends Component {
       categories,
     } = this.state;
     return (
-      <main>
+      <div>
         <header>
           <input type="text" />
         </header>
-        <p data-testid="home-initial-message">
-          Digite algum termo de pesquisa ou escolha uma categoria.
-        </p>
 
+        <main>
+          <p data-testid="home-initial-message">
+            Digite algum termo de pesquisa ou escolha uma categoria.
+          </p>
+        </main>
         <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
-      </div>
+
         <aside>
           {categories.map((category) => (
             <button
@@ -48,7 +49,7 @@ class ProductSearch extends Component {
             </button>
           ))}
         </aside>
-      </main>
+      </div>
     );
   }
 }
