@@ -11,7 +11,7 @@ class DetailsCard extends Component {
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
     const response = await getProductsFromCategoryAndQuery(id);
-    // Preciso filtrar aqui o produto que deve ser setado no state e renderizado
+    // Preciso filtrar aqui o produto que deve ser setado no state e renderizado!
     const toFilter = response.results;
     console.log(toFilter);
     const filtered = toFilter.filter((e) => e.id === id);
