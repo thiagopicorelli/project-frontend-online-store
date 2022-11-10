@@ -41,7 +41,6 @@ class ProductSearch extends Component {
   categoryId = async (event) => {
     const { target: { id } } = event;
     const response = await getProductsFromCategoryAndQuery(id);
-    // console.log(response);
     this.setState({
       products: response.results,
     });
