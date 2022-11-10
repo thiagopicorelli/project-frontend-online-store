@@ -97,7 +97,7 @@ class ProductSearch extends Component {
           <Link
             // params={ cartList }
             // to="/cart"
-            to={ { pathname: '/cart', props: { cartList } } }
+            to={ { pathname: '/cart', props: { cartList, products } } }
             data-testid="shopping-cart-button"
           >
 

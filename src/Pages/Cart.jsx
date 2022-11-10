@@ -24,12 +24,16 @@ class Cart extends Component {
   render() {
     const { location } = this.props;
 
+    let cartListIsntEmpty = false;
+    if (Object.hasOwn(location, 'props')) {
+      cartListIsntEmpty = location.props.cartList.length > 0;
+    }
+
     console.log('location no corrinho', location);
     return (
       <div>
-
         {
-          location.props.cartList.length > 0 ? (
+          cartListIsntEmpty ? (
             <div>
               <div>
                 <p data-testid="shopping-cart-product-name">
