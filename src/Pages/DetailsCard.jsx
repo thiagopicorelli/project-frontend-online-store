@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import ProductCard from '../Components/ProductCard';
+import { addCart } from '../services/localStorageAPI';
 
 class DetailsCard extends Component {
   state = {
-    products: [],
+    product: [],
   };
 
   componentDidMount() {
@@ -16,12 +17,20 @@ class DetailsCard extends Component {
     const { match: { params: { id } } } = this.props;
     const response = await getProductById(id);
     this.setState({
-      products: response,
+      product: response,
     });
   };
 
+  addCartList = () => {
+    const {
+      product,
+    } = this.state;
+    const result = addCart(product);
+    console.log(result);
+  };
+
   render() {
-    const { products } = this.state;
+    const { product } = this.state;
     const { history } = this.props;
     return (
       <div>
@@ -32,12 +41,20 @@ class DetailsCard extends Component {
         >
           Carrinho de Compras
         </button>
+        <button
+          id={ product.id }
+          type="button"
+          data-testid="product-detail-add-to-cart"
+          onClick={ this.addCartList }
+        >
+          Adicionar ao Carrinho
+        </button>
         {
-          products && (
+          product && (
             <ProductCard
-              title={ products.title }
-              price={ products.price }
-              thumbnail={ products.thumbnail }
+              title={ product.title }
+              price={ product.price }
+              thumbnail={ product.thumbnail }
             />
           )
         }

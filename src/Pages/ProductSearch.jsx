@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../Components/ProductCard';
-// import { addCart } from '../services/localStorageAPI';
+import { addCart } from '../services/localStorageAPI';
 
 class ProductSearch extends Component {
   constructor() {
@@ -57,13 +57,11 @@ class ProductSearch extends Component {
     if (cartList) {
       array = cartList;
       array.push(result);
+    } else {
+      array = result;
     }
-    // console.log('array', array);
-    // const teste = await addCart(result);
-    // console.log('teste LocalStorage', teste);
+    addCart(result);
     this.setState({ cartList: array });
-    // console.log('result', result);
-    // console.log('addCart', target.id);
   };
 
   render() {
@@ -71,7 +69,6 @@ class ProductSearch extends Component {
       categories,
       query,
       products,
-      cartList,
     } = this.state;
     // console.log('cartList', cartList);
     return (
@@ -96,8 +93,7 @@ class ProductSearch extends Component {
         <main>
           <Link
             // params={ cartList }
-            // to="/cart"
-            to={ { pathname: '/cart', props: { cartList, products } } }
+            to="/cart"
             data-testid="shopping-cart-button"
           >
 
