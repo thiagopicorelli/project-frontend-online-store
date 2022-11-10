@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
+import ProductCard from '../Components/ProductCard';
 
 class DetailsCard extends Component {
   state = {
     products: [],
   };
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getProduct();
+  }
+
+  getProduct = async () => {
     const { match: { params: { id } } } = this.props;
     const response = await getProductById(id);
     this.setState({
       products: response,
     });
-  }
+  };
 
   render() {
     const { products } = this.state;
@@ -29,15 +34,11 @@ class DetailsCard extends Component {
         </button>
         {
           products && (
-            <div>
-              <p data-testid="product-detail-name">{ products.title }</p>
-              <p data-testid="product-detail-price">{ products.price }</p>
-              <img
-                src={ products.thumbnail }
-                alt={ products.title }
-                data-testid="product-detail-image"
-              />
-            </div>
+            <ProductCard
+              title={ products.title }
+              price={ products.price }
+              thumbnail={ products.thumbnail }
+            />
           )
         }
       </div>
