@@ -20,8 +20,6 @@ class Cart extends Component {
   //     title: response[0].title,
   //     quantity: response[0].available_quantity });
   // };
-  //
-  //
 
   render() {
     const { location } = this.props;
