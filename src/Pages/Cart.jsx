@@ -1,46 +1,36 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { getCartItems } from '../services/localStorageAPI';
 
 class Cart extends Component {
-  // state = {
-  //   title: 'teste teste',
-  //   quantity: '',
-  //   cartList: [],
-  // };
+  state = {
+    cartList: [],
+  };
 
-  // componentDidMount() {
-  //   // this.getItemsCart();
+  componentDidMount() {
+    this.getItemsCart();
+  }
 
-  // }
-
-  // getItemsCart = async () => {
-  //   const response = await getCartItems();
-  //   console.log('response', response);
-  //   this.setState({ cartList: response,
-  //     title: response[0].title,
-  //     quantity: response[0].available_quantity });
-  // };
+  getItemsCart = () => {
+    const cartList = getCartItems();
+    console.log('cartList', cartList);
+    this.setState({
+      cartList,
+    });
+  };
 
   render() {
-    const { location } = this.props;
-
-    let cartListIsntEmpty = false;
-    if (Object.hasOwn(location, 'props')) {
-      cartListIsntEmpty = location.props.cartList.length > 0;
-    }
-
-    console.log('location no corrinho', location);
+    const { cartList } = this.state;
     return (
       <div>
         {
-          cartListIsntEmpty ? (
+          cartList.length > 0 ? (
             <div>
               <div>
                 <p data-testid="shopping-cart-product-name">
-                  {location.props.cartList[0].title}
+                  {cartList[0].title}
                 </p>
                 <p data-testid="shopping-cart-product-quantity">
-                  {location.props.cartList.length}
+                  {cartList.length}
                 </p>
               </div>
             </div>
@@ -57,10 +47,5 @@ class Cart extends Component {
     );
   }
 }
-
-Cart.propTypes = {
-  location: PropTypes.string.isRequired,
-
-};
 
 export default Cart;
