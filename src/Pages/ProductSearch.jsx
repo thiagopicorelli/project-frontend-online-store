@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../Components/ProductCard';
 
@@ -41,6 +41,7 @@ class ProductSearch extends Component {
   categoryId = async (event) => {
     const { target: { id } } = event;
     const response = await getProductsFromCategoryAndQuery(id);
+    // console.log(response);
     this.setState({
       products: response.results,
     });
@@ -76,11 +77,22 @@ class ProductSearch extends Component {
             products.length !== 0
               ? products.map((product) => (
                 <div key={ product.id }>
-                  <ProductCard
-                    title={ product.title }
-                    price={ product.price }
-                    thumbnail={ product.thumbnail }
-                  />
+                  <Link
+                    to={ `/details-card/${product.id}` }
+                  >
+                    <ProductCard
+                      title={ product.title }
+                      price={ product.price }
+                      thumbnail={ product.thumbnail }
+                      onClick={ this.handleCardClick }
+                    />
+                  </Link>
+                  <button
+                    type="button"
+                    data-testid="product-add-to-cart"
+                  >
+                    Adicionar ao Carrinho
+                  </button>
                 </div>
               ))
               : (
