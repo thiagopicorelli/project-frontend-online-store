@@ -78,9 +78,11 @@ class ProductSearch extends Component {
               ? products.map((product) => (
                 <div key={ product.id }>
                   <Link
+                    data-testid="product-detail-link"
                     to={ `/details-card/${product.id}` }
                   >
                     <ProductCard
+                      id={ product.id }
                       title={ product.title }
                       price={ product.price }
                       thumbnail={ product.thumbnail }

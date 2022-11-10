@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ProductCard from '../Components/ProductCard';
+import { getProductById } from '../services/api';
 
 class DetailsCard extends Component {
   state = {
@@ -10,37 +9,38 @@ class DetailsCard extends Component {
 
   async componentDidMount() {
     const { match: { params: { id } } } = this.props;
-    const response = await getProductsFromCategoryAndQuery(id);
-    // Preciso filtrar aqui o produto que deve ser setado no state e renderizado!
-    const toFilter = response.results;
-    console.log(toFilter);
-    const filtered = toFilter.filter((e) => e.id === id);
-    console.log(filtered);
-    console.log(response.results);
+    const response = await getProductById(id);
     this.setState({
-      products: filtered,
+      products: response,
     });
   }
 
   render() {
     const { products } = this.state;
+    const { history } = this.props;
     return (
-      <Route exact path="/details-card/:id">
-        <button type="button" onClick={ <Redirect to="/cart" /> }>
+      <div>
+        <button
+          type="button"
+          onClick={ () => (history.push('/cart')) }
+          data-testid="shopping-cart-button"
+        >
           Carrinho de Compras
         </button>
         {
-          products && products.map((product) => (
-            <div key={ product.id }>
-              <ProductCard
-                title={ product.title }
-                price={ product.price }
-                thumbnail={ product.thumbnail }
+          products && (
+            <div>
+              <p data-testid="product-detail-name">{ products.title }</p>
+              <p data-testid="product-detail-price">{ products.price }</p>
+              <img
+                src={ products.thumbnail }
+                alt={ products.title }
+                data-testid="product-detail-image"
               />
             </div>
-          ))
+          )
         }
-      </Route>
+      </div>
     );
   }
 }
