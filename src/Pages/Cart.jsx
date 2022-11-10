@@ -21,6 +21,7 @@ class Cart extends Component {
   //     quantity: response[0].available_quantity });
   // };
   //
+  //
 
   render() {
     const { location } = this.props;
