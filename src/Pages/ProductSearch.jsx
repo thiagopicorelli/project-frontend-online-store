@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../Components/ProductCard';
+// import { addCart } from '../services/localStorageAPI';
 
 class ProductSearch extends Component {
   constructor() {
@@ -10,6 +11,7 @@ class ProductSearch extends Component {
       categories: [],
       products: [],
       query: '',
+      cartList: [],
     };
   }
 
@@ -46,12 +48,32 @@ class ProductSearch extends Component {
     });
   };
 
+  addCartList = async (event) => {
+    const { target } = event;
+    const { products, cartList } = this.state;
+
+    const result = products.find((product) => product.id === target.id);
+    let array = [];
+    if (cartList) {
+      array = cartList;
+      array.push(result);
+    }
+    // console.log('array', array);
+    // const teste = await addCart(result);
+    // console.log('teste LocalStorage', teste);
+    this.setState({ cartList: array });
+    // console.log('result', result);
+    // console.log('addCart', target.id);
+  };
+
   render() {
     const {
       categories,
       query,
       products,
+      cartList,
     } = this.state;
+    // console.log('cartList', cartList);
     return (
       <div>
         <header>
@@ -72,15 +94,40 @@ class ProductSearch extends Component {
         </header>
 
         <main>
+          <Link
+            // params={ cartList }
+            // to="/cart"
+            to={ { pathname: '/cart', props: { cartList } } }
+            data-testid="shopping-cart-button"
+          >
+
+            Carrinho
+
+          </Link>
           {
             products.length !== 0
               ? products.map((product) => (
-                <div key={ product.id }>
-                  <ProductCard
-                    title={ product.title }
-                    price={ product.price }
-                    thumbnail={ product.thumbnail }
-                  />
+                <div id={ product.id } key={ product.id }>
+                  <Link
+                    data-testid="product-detail-link"
+                    to={ `/details-card/${product.id}` }
+                  >
+                    <ProductCard
+                      id={ product.id }
+                      title={ product.title }
+                      price={ product.price }
+                      thumbnail={ product.thumbnail }
+                      onClick={ this.handleCardClick }
+                    />
+                  </Link>
+                  <button
+                    id={ product.id }
+                    type="button"
+                    data-testid="product-add-to-cart"
+                    onClick={ this.addCartList }
+                  >
+                    Adicionar ao Carrinho
+                  </button>
                 </div>
               ))
               : (
@@ -95,7 +142,7 @@ class ProductSearch extends Component {
               )
           }
         </main>
-        <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
+
         <aside>
           {categories.map((category) => (
             <button
