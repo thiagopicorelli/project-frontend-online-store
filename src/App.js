@@ -10,8 +10,8 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={ ProductSearch } />
-        <Route exact path="/cart" component={ Cart } />
         <Route exact path="/details-card/:id" component={ DetailsCard } />
+        <Route exact path="/cart" component={ Cart } />
       </Switch>
     </Router>
   );
