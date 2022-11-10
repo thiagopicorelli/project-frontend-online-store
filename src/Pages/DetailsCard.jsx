@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import ProductCard from '../Components/ProductCard';
 
-class detailsCard extends Component {
+class DetailsCard extends Component {
   state = {
     products: [],
   };
@@ -45,8 +45,8 @@ class detailsCard extends Component {
   }
 }
 
-detailsCard.propTypes = {
+DetailsCard.propTypes = {
   id: PropTypes.string,
 }.isRequired;
 
-export default detailsCard;
+export default DetailsCard;
