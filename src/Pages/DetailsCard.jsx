@@ -25,8 +25,7 @@ class DetailsCard extends Component {
     const {
       product,
     } = this.state;
-    const result = addCart(product);
-    console.log(result);
+    addCart(product);
   };
 
   render() {

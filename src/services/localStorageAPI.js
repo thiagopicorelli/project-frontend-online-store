@@ -16,7 +16,7 @@ export const addCart = (cart) => {
   }
 };
 
-export const removeitem /* camelCase */ = (cart) => new Promise((resolve) => {
+export const removeitem = (cart) => new Promise((resolve) => {
   const addCartProduct = getCartItems();
   saveCartItems(addCartProduct.filter((s) => s.trackId !== cart.trackId));// trackId??
   simulateRequest(SUCCESS_STATUS)(resolve);
