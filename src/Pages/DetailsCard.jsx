@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import ProductCard from '../Components/ProductCard';
 import { saveCartItems, getCartItems } from '../services/localStorageAPI';
+import AvaliationForm from '../Components/AvaliationForm';
 
 class DetailsCard extends Component {
   state = {
@@ -41,7 +42,7 @@ class DetailsCard extends Component {
 
   render() {
     const { product } = this.state;
-    const { history } = this.props;
+    const { history, match: { params: { id } } } = this.props;
     return (
       <div>
         <button
@@ -68,6 +69,9 @@ class DetailsCard extends Component {
             />
           )
         }
+        <div>
+          <AvaliationForm prodId={ id } />
+        </div>
       </div>
     );
   }
