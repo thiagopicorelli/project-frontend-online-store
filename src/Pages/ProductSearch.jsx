@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import ProductCard from '../Components/ProductCard';
-import { addCart } from '../services/localStorageAPI';
+import { saveCartItems } from '../services/localStorageAPI';
 
 class ProductSearch extends Component {
   constructor() {
@@ -53,15 +53,18 @@ class ProductSearch extends Component {
     const { products, cartList } = this.state;
 
     const result = products.find((product) => product.id === target.id);
-    let array = [];
-    if (cartList) {
-      array = cartList;
-      array.push(result);
+    const index = cartList.findIndex((product) => product.id === target.id);
+    const ERROR = -1;
+
+    if (index !== ERROR) {
+      cartList[index].amount += 1;
     } else {
-      array = result;
+      result.amount = 1;
+      cartList.push(result);
     }
-    addCart(result);
-    this.setState({ cartList: array });
+
+    saveCartItems(cartList);
+    this.setState({ cartList });
   };
 
   render() {
@@ -70,7 +73,6 @@ class ProductSearch extends Component {
       query,
       products,
     } = this.state;
-    // console.log('cartList', cartList);
     return (
       <div>
         <header>
@@ -91,29 +93,19 @@ class ProductSearch extends Component {
         </header>
 
         <main>
-          <Link
-            // params={ cartList }
-            to="/cart"
-            data-testid="shopping-cart-button"
-          >
-
-            Carrinho
-
-          </Link>
+          <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
           {
             products.length !== 0
               ? products.map((product) => (
-                <div id={ product.id } key={ product.id }>
+                <div key={ product.id }>
                   <Link
                     data-testid="product-detail-link"
                     to={ `/details-card/${product.id}` }
                   >
                     <ProductCard
-                      id={ product.id }
                       title={ product.title }
                       price={ product.price }
                       thumbnail={ product.thumbnail }
-                      onClick={ this.handleCardClick }
                     />
                   </Link>
                   <button
@@ -138,7 +130,6 @@ class ProductSearch extends Component {
               )
           }
         </main>
-
         <aside>
           {categories.map((category) => (
             <button
