@@ -55,15 +55,6 @@ class ProductSearch extends Component {
     const result = products.find((product) => product.id === target.id);
     const index = cartList.findIndex((product) => product.id === target.id);
     const ERROR = -1;
-    // let array = [];
-    /*  if (cartList) {
-      array = cartList;
-      array.push(result);
-    } else {
-      array = result;
-    } */
-    /* if (cartList.length > 0) {
-      const index = cartList.findIndex((product) => product.id === target.id); */
 
     if (index !== ERROR) {
       cartList[index].amount += 1;
@@ -71,30 +62,6 @@ class ProductSearch extends Component {
       result.amount = 1;
       cartList.push(result);
     }
-
-    /*  for (let i = 0; i < cartList.length; i += 1) {
-        if (cartList[i].id === target.id) {
-          product.amount += 1;
-          break;
-        } else {
-          result.amount = 1;
-          cartList.push(result);
-        }
-      }
-
-      cartList.forEach((product) => {
-        if (product.id === target.id) {
-          product.amount += 1;
-          break;
-        } else {
-          result.amount = 1;
-          cartList.push(result);
-        }
-      });
-    } else {
-      result.amount = 1;
-      cartList.push(result);
-    } */
 
     saveCartItems(cartList);
     this.setState({ cartList });
