@@ -10,8 +10,8 @@ class DetailsCard extends Component {
     product: [],
   };
 
-  componentDidMount() {
-    this.getProduct();
+  async componentDidMount() {
+    await this.getProduct();
   }
 
   getProduct = async () => {

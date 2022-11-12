@@ -15,8 +15,8 @@ class ProductSearch extends Component {
     };
   }
 
-  componentDidMount() {
-    this.categoriesAPI();
+  async componentDidMount() {
+    await this.categoriesAPI();
   }
 
   requireAPI = async () => {
@@ -75,6 +75,13 @@ class ProductSearch extends Component {
     } = this.state;
     return (
       <div>
+        {/*    <button
+          type="button"
+          data-testid="category"
+          onClick={ () => console.log('chamou') }
+        >
+          category
+        </button> */}
         <header>
           <input
             data-testid="query-input"
@@ -91,6 +98,20 @@ class ProductSearch extends Component {
             Pesquisar
           </button>
         </header>
+        <aside>
+          {categories.map((category) => (
+            <button
+              data-testid="category"
+              id={ category.id }
+              name={ category.id }
+              type="button"
+              key={ category.id }
+              onClick={ this.categoryId }
+            >
+              {category.name}
+            </button>
+          ))}
+        </aside>
 
         <main>
           <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
@@ -130,20 +151,6 @@ class ProductSearch extends Component {
               )
           }
         </main>
-        <aside>
-          {categories.map((category) => (
-            <button
-              name={ category.id }
-              id={ category.id }
-              data-testid="category"
-              type="button"
-              key={ category.id }
-              onClick={ this.categoryId }
-            >
-              {category.name}
-            </button>
-          ))}
-        </aside>
       </div>
     );
   }
