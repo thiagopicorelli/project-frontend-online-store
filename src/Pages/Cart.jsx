@@ -94,7 +94,7 @@ class Cart extends Component {
               </p>
             )
         }
-        <Link to="/finalizepurchase">Comprar</Link>
+        <Link to="/finalizepurchase" data-testid="checkout-products">Comprar</Link>
       </div>
     );
   }
