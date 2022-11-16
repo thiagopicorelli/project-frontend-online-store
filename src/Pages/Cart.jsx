@@ -5,6 +5,7 @@ import { getCartItems, saveCartItems } from '../services/localStorageAPI';
 class Cart extends Component {
   state = {
     cartList: [],
+    cartListExists: 0,
   };
 
   componentDidMount() {
@@ -13,9 +14,12 @@ class Cart extends Component {
 
   getItemsCart = () => {
     const cartList = getCartItems();
-    this.setState({
-      cartList,
-    });
+    if (cartList.length > 0) {
+      this.setState({
+        cartList,
+        cartListExists: cartList.length > 0,
+      });
+    }
   };
 
   removeItemFromCart = ({ target }) => {
@@ -46,12 +50,12 @@ class Cart extends Component {
   };
 
   render() {
-    const { cartList } = this.state;
+    const { cartList, cartListExists } = this.state;
     return (
       <div>
         <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
         {
-          cartList.length > 0 ? (
+          cartListExists ? (
             cartList.map((product, index) => (
               <div key={ index }>
                 <p data-testid="shopping-cart-product-name">
@@ -94,6 +98,52 @@ class Cart extends Component {
               </p>
             )
         }
+        { /*
+          cartList.length === 0
+            ? (
+              <p data-testid="shopping-cart-empty-message">
+                Seu carrinho está vazio
+              </p>
+            )
+            : (
+              cartList.map((product, index) => (
+                <div key={ index }>
+                  <p data-testid="shopping-cart-product-name">
+                    {product.title}
+                  </p>
+                  <button
+                    id={ product.id }
+                    type="button"
+                    data-testid="product-decrease-quantity"
+                    onClick={ this.decreaseItemToCart }
+                  >
+                    -
+                  </button>
+                  <span
+                    data-testid="shopping-cart-product-quantity"
+                  >
+                    { product.amount }
+                  </span>
+                  <button
+                    id={ product.id }
+                    type="button"
+                    data-testid="product-increase-quantity"
+                    onClick={ this.incrementItemToCart }
+                  >
+                    +
+                  </button>
+                  <button
+                    id={ product.id }
+                    type="button"
+                    data-testid="remove-product"
+                    onClick={ this.removeItemFromCart }
+                  >
+                    remove
+                  </button>
+                </div>
+              )))
+              */ }
+        <Link to="/finalizepurchase" data-testid="checkout-products">Comprar</Link>
       </div>
     );
   }
