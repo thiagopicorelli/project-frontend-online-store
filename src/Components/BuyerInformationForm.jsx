@@ -50,14 +50,14 @@ class BuyerInformationForm extends Component {
     const re = /\S+@\S+\.\S+/;
     if (name.length > 0
       && email.length > 0
-      && CPF > 0
-      && phone > 0
+      && CPF.length > 0
+      && phone.length > 0
       && address.length > 0
       && complement.length > 0
       && number > 0
       && city.length > 0
       && state.length > 0
-      && CEP > 0
+      && CEP.length > 0
       && re.test(email) === true) {
       this.setState({
         name: '',
@@ -110,7 +110,7 @@ class BuyerInformationForm extends Component {
           />
           <input
             required
-            type="number"
+            type="text"
             placeholder="CPF"
             data-testid="checkout-cpf"
             name="CPF"
@@ -128,7 +128,7 @@ class BuyerInformationForm extends Component {
           />
           <input
             required
-            type="number"
+            type="text"
             placeholder="Telefone"
             data-testid="checkout-phone"
             name="phone"
@@ -137,7 +137,7 @@ class BuyerInformationForm extends Component {
           />
           <input
             required
-            type="number"
+            type="text"
             placeholder="CEP"
             data-testid="checkout-cep"
             name="CEP"
