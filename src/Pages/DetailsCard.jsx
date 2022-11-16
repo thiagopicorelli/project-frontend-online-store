@@ -8,11 +8,20 @@ import AvaliationForm from '../Components/AvaliationForm';
 class DetailsCard extends Component {
   state = {
     product: [],
+    cartList: [],
   };
 
   async componentDidMount() {
     await this.getProduct();
+    await this.getCartListState();
   }
+
+  getCartListState = async () => {
+    const cartList = getCartItems();
+    this.setState({
+      cartList,
+    });
+  };
 
   getProduct = async () => {
     const {
@@ -28,8 +37,7 @@ class DetailsCard extends Component {
 
   addCartList = (event) => {
     const { target } = event;
-    const { product } = this.state;
-    const cartList = getCartItems();
+    const { product, cartList } = this.state;
 
     const index = cartList.findIndex((produc) => produc.id === target.id);
     const ERROR = -1;
@@ -42,10 +50,11 @@ class DetailsCard extends Component {
     }
 
     saveCartItems(cartList);
+    this.getCartListState();
   };
 
   render() {
-    const { product } = this.state;
+    const { product, cartList } = this.state;
     const {
       history,
       match: {
@@ -61,6 +70,10 @@ class DetailsCard extends Component {
         >
           Carrinho de Compras
         </button>
+        <div data-testid="shopping-cart-size">
+          { cartList !== null
+          && cartList.reduce((prev, curr) => (+prev) + (+curr.amount), 0) }
+        </div>
         <button
           id={ product.id }
           type="button"
@@ -74,6 +87,7 @@ class DetailsCard extends Component {
             title={ product.title }
             price={ product.price }
             thumbnail={ product.thumbnail }
+            shipping={ product.shipping }
           />
         )}
         <div>

@@ -33,7 +33,9 @@ class Cart extends Component {
   incrementItemToCart = async ({ target }) => {
     const { cartList } = this.state;
     const index = cartList.findIndex((product) => product.id === target.id);
-    cartList[index].amount += 1;
+    if (cartList[index].amount < cartList[index].available_quantity) {
+      cartList[index].amount += 1;
+    }
     this.setState({ cartList });
     saveCartItems(cartList);
   };
