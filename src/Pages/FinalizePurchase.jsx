@@ -14,7 +14,7 @@ class FinalizePurchase extends Component {
 
   getItemsCart = () => {
     const cartList = getCartItems();
-    console.log('cartList', cartList);
+    // console.log('cartList', cartList);
     this.setState({
       cartList,
     });

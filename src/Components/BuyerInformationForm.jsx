@@ -14,51 +14,29 @@ class BuyerInformationForm extends Component {
     state: '',
     CEP: '',
     valid: true,
-    isChecked: false,
-    preview: [],
-  };
-
-  componentDidMount() {
-    this.loadPreview();
-  }
-
-  loadPreview = () => {
-    const { prodId } = this.props;
-    let preview = localStorage.getItem(prodId);
-    if (preview !== null) {
-      preview = JSON.parse(preview);
-      this.setState({
-        preview,
-      });
-    }
+    payment: false,
   };
 
   onInputChange = (event) => {
-    const { name, checked, type } = event.target;
-    const value = type === 'radio' ? checked : event.target.value;
+    const { name, value } = event.target;
     this.setState({
       [name]: value,
     });
   };
 
-  // eslint-disable-next-line complexity
   checkInputs = () => {
     const { name, email, CPF, phone, address,
-      complement, number, city, state, CEP, preview,
+      CEP, payment,
     } = this.state;
-    const { prodId } = this.props;
     const re = /\S+@\S+\.\S+/;
     if (name.length > 0
       && email.length > 0
       && CPF.length > 0
       && phone.length > 0
       && address.length > 0
-      && complement.length > 0
-      && number > 0
-      && city.length > 0
-      && state.length > 0
       && CEP.length > 0
-      && re.test(email) === true) {
+      && re.test(email) === true
+      && payment !== false) {
       this.setState({
         name: '',
         email: '',
@@ -70,8 +48,9 @@ class BuyerInformationForm extends Component {
         city: '',
         state: '',
         valid: true,
+        payment: false,
       });
-      localStorage.setItem(prodId, JSON.stringify(preview));
+      localStorage.setItem('cartProducts', JSON.stringify([]));
     } else {
       this.setState({
         valid: false,
@@ -92,8 +71,6 @@ class BuyerInformationForm extends Component {
       state,
       CEP,
       valid,
-      isChecked,
-      preview,
     } = this.state;
     return (
       <form>
@@ -163,7 +140,7 @@ class BuyerInformationForm extends Component {
           />
           <input
             required
-            type="number"
+            type="text"
             placeholder="Número"
             name="number"
             value={ number }
@@ -192,28 +169,28 @@ class BuyerInformationForm extends Component {
             type="radio"
             name="payment"
             data-testid="ticket-payment"
-            value={ isChecked }
+            value="ticket"
             onChange={ this.onInputChange }
           />
           <input
             type="radio"
             name="payment"
             data-testid="visa-payment"
-            value={ isChecked }
+            value="visa"
             onChange={ this.onInputChange }
           />
           <input
             type="radio"
             name="payment"
             data-testid="master-payment"
-            value={ isChecked }
+            value="master"
             onChange={ this.onInputChange }
           />
           <input
             type="radio"
             name="payment"
             data-testid="elo-payment"
-            value={ isChecked }
+            value="elo"
             onChange={ this.onInputChange }
           />
         </label>
@@ -225,21 +202,6 @@ class BuyerInformationForm extends Component {
         >
           Comprar
         </button>
-        <fieldset>
-          { preview.map((view) => (
-            <fieldset key={ view.name }>
-              <p>{view.name}</p>
-              <p>{view.email}</p>
-              <p>{view.CPF}</p>
-              <p>{view.phone}</p>
-              <p>{view.address}</p>
-              <p>{view.complement}</p>
-              <p>{view.number}</p>
-              <p>{view.city}</p>
-              <p>{view.state}</p>
-            </fieldset>
-          ))}
-        </fieldset>
       </form>
     );
   }
@@ -247,4 +209,5 @@ class BuyerInformationForm extends Component {
 BuyerInformationForm.propTypes = {
   prodId: PropTypes.string,
 }.isRequired;
+
 export default BuyerInformationForm;

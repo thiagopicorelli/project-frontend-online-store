@@ -15,7 +15,11 @@ class DetailsCard extends Component {
   }
 
   getProduct = async () => {
-    const { match: { params: { id } } } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
     const response = await getProductById(id);
     this.setState({
       product: response,
@@ -42,12 +46,17 @@ class DetailsCard extends Component {
 
   render() {
     const { product } = this.state;
-    const { history, match: { params: { id } } } = this.props;
+    const {
+      history,
+      match: {
+        params: { id },
+      },
+    } = this.props;
     return (
       <div>
         <button
           type="button"
-          onClick={ () => (history.push('/cart')) }
+          onClick={ () => history.push('/cart') }
           data-testid="shopping-cart-button"
         >
           Carrinho de Compras
@@ -60,15 +69,13 @@ class DetailsCard extends Component {
         >
           Adicionar ao Carrinho
         </button>
-        {
-          product && (
-            <ProductCard
-              title={ product.title }
-              price={ product.price }
-              thumbnail={ product.thumbnail }
-            />
-          )
-        }
+        {product && (
+          <ProductCard
+            title={ product.title }
+            price={ product.price }
+            thumbnail={ product.thumbnail }
+          />
+        )}
         <div>
           <AvaliationForm prodId={ id } />
         </div>
