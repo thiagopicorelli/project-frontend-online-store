@@ -94,6 +94,7 @@ class Cart extends Component {
               </p>
             )
         }
+        <Link to="/finalizepurchase">Comprar</Link>
       </div>
     );
   }
