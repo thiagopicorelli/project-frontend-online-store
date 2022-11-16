@@ -125,7 +125,8 @@ class ProductSearch extends Component {
         <main>
           <Link to="/cart" data-testid="shopping-cart-button">Carrinho</Link>
           <div data-testid="shopping-cart-size">
-            { cartList.reduce((prev, curr) => (+prev) + (+curr.amount), 0) }
+            { cartList !== null
+            && cartList.reduce((prev, curr) => (+prev) + (+curr.amount), 0) }
           </div>
           {
             products.length !== 0
@@ -139,6 +140,7 @@ class ProductSearch extends Component {
                       title={ product.title }
                       price={ product.price }
                       thumbnail={ product.thumbnail }
+                      shipping={ product.shipping }
                     />
                   </Link>
                   <button

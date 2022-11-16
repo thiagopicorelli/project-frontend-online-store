@@ -12,8 +12,8 @@ class DetailsCard extends Component {
   };
 
   async componentDidMount() {
-    await this.getCartListState();
     await this.getProduct();
+    await this.getCartListState();
   }
 
   getCartListState = async () => {
@@ -71,7 +71,8 @@ class DetailsCard extends Component {
           Carrinho de Compras
         </button>
         <div data-testid="shopping-cart-size">
-          { cartList.reduce((prev, curr) => (+prev) + (+curr.amount), 0) }
+          { cartList !== null
+          && cartList.reduce((prev, curr) => (+prev) + (+curr.amount), 0) }
         </div>
         <button
           id={ product.id }
@@ -86,6 +87,7 @@ class DetailsCard extends Component {
             title={ product.title }
             price={ product.price }
             thumbnail={ product.thumbnail }
+            shipping={ product.shipping }
           />
         )}
         <div>
